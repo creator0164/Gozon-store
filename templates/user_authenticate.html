@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block user_auth %}
+<h3>Authenticate</h3>
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    <strong>Message:</strong>{{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+<a href="/login">Back</a>
+{% if pn %}
+<h4>{{pn}}</h4>
+<form action="/send_otp/" method="post">
+    {% csrf_token %}
+    <input name="otp_verified" type="text" placeholder="OTP" required>
+    <button type="submit">Send</button>
+</form>
+{% else %}
+<form action="/send/" method="post">
+    {% csrf_token %}
+    <input name="user_auth" type="text" placeholder="Number" required>
+    <button type="submit">Send</button>
+</form>
+{% endif %}
+{% endblock %}
